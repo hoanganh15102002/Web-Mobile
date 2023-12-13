@@ -1,0 +1,108 @@
+﻿@model Mobile_ecommerce.Models.ViewModel.Customer.CustomerEditClient
+
+@{ ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+<link href="~/Asset/Client/css/info.css" rel="stylesheet" /> }
+
+@section scripts {
+    <script src="~/Asset/Admin/js/script.js"></script>
+}
+
+
+
+<div class="main__content">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header py-2">
+                        <h4 class="header-title mb-0 text-center">Thông tin cá nhân</h4>
+                    </div>
+                    <div class="content--info mt-2">
+                        @using (Html.BeginForm("Info", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(m=>m.MaKH)
+                        <div class="row g-3">
+                            <div class="col-12 img--info d-flex flex-column align-items-center">
+                                <label for="inputMain" class="lbImgMain">
+                                    @if (ViewBag.AnhDaiDien != null)
+                                    {
+                        <img id="ImageMain" class="img_main img-thumbnail img_main" src="@ViewBag.AnhDaiDien" alt="Ảnh đại diện" /> }
+                    else
+                    {
+                        <img id="ImageMain" class="img_main img-thumbnail img_main" src="~/Asset/Client/img/info/c.jpg" alt="Ảnh đại diện" />}
+                                </label>
+                                <input class="mt-2" type="file" name="ImageMain" onchange="ShowImageMain(this, document.getElementById('ImageMain'))" />
+                            </div>
+                            <div class="col-12">
+                                <div class="row d-flex justify-content-center">
+                                    @Html.LabelFor(model => model.Ten, "Họ tên", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row d-flex justify-content-center">
+                                    @Html.LabelFor(model => model.SoDienThoai, "Số điện thoại", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row d-flex justify-content-center">
+                                    @Html.LabelFor(model => model.Mail, "Mail", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Mail, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row d-flex justify-content-center">
+                                    @Html.LabelFor(model => model.GioiTinh, "Giới tính", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.DropDownListFor(model => model.GioiTinh, new List<SelectListItem>()
+                                                                                                {
+                                                new SelectListItem() {Value = "0", Text = "Nam"},
+                                                new SelectListItem() {Value = "1", Text = "Nữ"}
+                                            }, "-- Chọn giới tính --",
+                                                  new { @class = "form-control text-box single-line" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row d-flex justify-content-center">
+                                    @Html.LabelFor(model => model.DiaChi, "Nhập địa chỉ", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-2">
+                                        @Html.ActionLink("Trở về", "Index", "Home", null, new { @class = "btn btn-light" })
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <input type="submit" value="Cập nhật thông tin" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

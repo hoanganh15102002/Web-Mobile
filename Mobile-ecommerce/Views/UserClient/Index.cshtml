@@ -1,0 +1,71 @@
+﻿@model Mobile_ecommerce.Models.ViewModel.User.LoginClient
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Asset/Client/css/login.css" rel="stylesheet" />
+    <link href="~/Asset/Client/css/clientlayout.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+
+<body>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div id="msgAlert" class="alert @TempData["AlertType"]" role="alert">
+            @TempData["AlertMessage"]
+        </div>
+    }
+    <div class="overlay">
+        @using (Html.BeginForm("Index", "UserClient", FormMethod.Post))
+        {
+            <div class="con">
+                <header class="head-form">
+                    <h2>Đăng nhập</h2>
+                </header>
+                <br>
+                <div class="field-set">
+
+                    <!--   user name -->
+                    <span class="input-item">
+                        <i class="fa fa-user-circle"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.login_name, new { @type = "text", @placeholder = "Tên tài khoản", @class = "form-input", @id = "txt-input" })
+                    <br>
+                    <!--   Password -->
+                    <span class="input-item">
+                        <i class="fa fa-key"></i>
+                    </span>
+                    <!--   Password Input-->
+                    @Html.PasswordFor(model => model.login_password, new { @type = "password", @placeholder = "Mật khẩu", @id = "pwd", @name = "password", @class = "form-input" })
+                    <span>
+                        <i class="fa fa-eye" aria-hidden="true" type="button" id="eye"></i>
+                    </span>
+                    <br>
+                    <button type="submit" class="log-in">  Đăng nhập </button>
+                </div>
+                <div class="d-flex align-items-center justify-content-around w-75">
+                    <div class="d-flex flex-column align-items-center">
+                        <span class="small pt-1 text-dark"> Chưa có tài khoản?</span>
+                        <a href="/UserClient/Register" class="btn btn-light">Đăng ký ngay</a>
+                    </div>
+                    <a href="#!" class="text-decoration-none text-dark ">Quên mật khẩu</a>
+                </div>            
+                @if (ViewBag.error != null)
+                {
+                    <div class="text-white fw-bolder text-center mt-3">@ViewBag.error</div>
+                }
+            </div>
+        }
+    </div>
+    <script src="~/Asset/Client/js/login.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,72 @@
+﻿@model Mobile_ecommerce.Models.ViewModel.User.UserRegister
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Asset/Client/css/register.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Asset/Client/css/clientlayout.css" rel="stylesheet" />
+</head>
+
+<body>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div id="msgAlert" class="alert @TempData["AlertType"]" role="alert">
+            @TempData["AlertMessage"]
+        </div>
+    }
+    <div class="container">
+        <div class="logo--register">
+            <img src="~/Asset/Client/img/logo.png" alt="">
+        </div>
+        <div class="head--contain">  <h1 class="text-center">Đăng ký</h1></div>
+        @using (Html.BeginForm("Register", "UserClient", FormMethod.Post, new { @class = "registration-form" }))
+        {
+            <label>
+                <span class="label-text">Tên tài khoản</span>
+                @Html.TextBoxFor(model => model.RegisterName)
+
+            </label>
+            <label>
+                <span class="label-text">Email</span>
+                @Html.TextBoxFor(model => model.RegisterEmail)
+            </label>
+            <label class="password">
+                <span class="label-text">Mật khẩu</span>
+                <span>
+                    <i class="fa fa-eye" aria-hidden="true" type="button" id="eye"></i>
+                </span>
+                @Html.PasswordFor(model => model.RegisterPass, new { @id = "pwd" })
+            </label>
+            <label class="password">
+                <span class="label-text">Xác nhận mật khẩu</span>
+                <span>
+                    <i class="fa fa-eye" aria-hidden="true" type="button" id="eye1"></i>
+                </span>
+                @Html.PasswordFor(model => model.ConfirmPass, new { @id = "pwdcon" })
+            </label>
+            <div class="d-flex flex-column align-items-center justify-content-center mt-3">
+                <button type="submit" class="submit w-50">  Đăng ký </button>
+                <div class="d-flex align-items-center mt-4">
+                    <span class="small pt-1 text-dark pe-2"> Đã có tài khoản?</span>
+                    <a href="/UserClient/" class="btn btn-light">Đăng nhập ngay</a>
+                </div>
+            </div>
+            if (ViewBag.error != null)
+            {
+                <div class="text-white fw-bolder text-center mt-2">@ViewBag.error</div>
+            }
+        }
+    </div>
+    <script src="~/Asset/Client/js/login.js"></script>
+</body>
+</html>
+
+

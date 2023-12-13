@@ -1,0 +1,85 @@
+﻿@model Mobile_ecommerce.Models.EF.Cart
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var price = ViewBag.price;
+}
+<style>
+    .cart-empty{
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
+        padding: 1rem 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        max-width: 1240px;
+        width: 100%;
+        margin: 0 auto;
+    }
+</style>
+<h2 class="text-center bg-danger text-light">Giỏ hàng</h2>
+@if (Session["cart"] == null)
+{
+<div class="cart-empty">
+    <p>Bạn không có sản phẩm trong giỏ hàng.</p>
+    <a href="/Home/Index" class="text-decoration-none text-danger">Trở về danh sách sản phẩm</a>
+</div>
+}
+else
+{
+    <a href="/Product/Index" class="btn btn-outline-dark mb-2">Tiếp tục mua</a>
+    <table class="table table-bordered table-light">
+        <thead class="text-center">
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th class="table-dark">Tổng tiền sản phẩm</th>
+                <td>
+                    Cập nhật số lượng
+                </td>
+                <td>Lựa chọn</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr class="align-middle">
+                    <td>@item.Product.ProductName</td>
+                    <td><img src="@item.Product.Images" class="img-fluid"style="height:100px" /></td>
+                    <td>@item.Product.Price<span> VNĐ</span></td>
+                    <td>@item.Quantity</td>
+                    <td>@item.TotalPrice<span> VNĐ</span></td>
+                    <td>
+                        @using (Html.BeginForm("UpdateFromCart", "ShoppingCart"))
+                        {
+                            <input type="hidden" value="@item.Product.ProductID" name="IDPro" />
+                            <div class="d-flex align-items-center">
+                                <input class="me-2" type="number" value="@item.Quantity" name="SL" max="15" min="1" />
+                                <button type="submit" class="btn-success">Cập nhật SL</button>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Xóa", "RemoveFromCart", "ShoppingCart", new { productId = item.Product.ProductID },
+                              new { @class = "btn btn-danger text-decoration-none" })
+                        <a class="text-decoration-none btn btn-info text-light" href="@Url.Action("Details", "Product", new { id = item.Product.ProductID })">
+                            Chi tiết
+                        </a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4"></td>
+                <td>Tổng cộng:</td>
+                <td colspan="2">@price<span> VNĐ</span></td>
+            </tr>
+            <tr>
+                <td colspan="7" class="text-center">
+                    @Html.ActionLink("Thanh toán ngay","Order", "ShoppingCart", new { @class = "btn btn-info text-light" })
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}

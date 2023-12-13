@@ -1,0 +1,71 @@
+﻿@using Mobile_ecommerce.Models.EF;
+@using PagedList.Mvc;
+@model PagedList.PagedList<ReviewPro>
+<style>
+    .reviewer, .rating, .review-content {
+        padding-left: 4%;
+    }
+
+    .fa-star {
+        color: #FFE234
+    }
+</style>
+@if (Model.Any())
+{
+    <h2>Danh sách người đánh giá</h2>
+    foreach (var review in Model)
+    {
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between review--info">
+                <span class="reviewer fs-5 fw-bold">@review.ReviewerName</span>
+                <span class="review-date fs-5">@review.ReviewDate.ToShortDateString()</span>
+            </div>
+            @if (review.RateValue == 5)
+            {
+                <div class="rating pe-2">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            }
+            else if (review.RateValue == 4)
+            {
+                <div class="rating pe-2">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            }
+            else if (review.RateValue == 3)
+            {
+                <div class="rating pe-2">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            }
+            else if (review.RateValue == 2)
+            {
+                <span class="rating pe-2">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </span>
+            }
+            else
+            {
+                <div class="rating pe-2">
+                    <i class="fa fa-star"></i>
+                </div>
+            }
+            <p class="review-content lead">@review.ReviewContent</p>
+        </div>
+
+    }
+}
+else
+{
+    <h4>Chưa có đánh giá nào cho sản phẩm này.</h4>
+}

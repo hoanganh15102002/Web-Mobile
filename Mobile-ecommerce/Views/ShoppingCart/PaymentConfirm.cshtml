@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "PaymentConfirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <link href="~/Asset/Client/css/success.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="card">
+        <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+            <i class="checkmark">✓</i>
+        </div>
+        <div class="text-center">          
+            <h2>@ViewBag.Message</h2>
+            <h2 class="fw-normal">Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi !</h2>
+            <a href="/Home/Index" class="btn btn-dark">Trở về trang chủ</a>
+        </div>
+
+    </div>
+</body>
+
+</html>
+

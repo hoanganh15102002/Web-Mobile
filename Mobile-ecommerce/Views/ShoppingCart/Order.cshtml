@@ -1,0 +1,97 @@
+﻿@using Mobile_ecommerce.Models.EF
+@using Mobile_ecommerce.Common
+@model Mobile_ecommerce.Models.EF.Cart
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Customer cus = (Customer)ViewBag.Info;
+    <link href="~/Asset/Client/css/order.css" rel="stylesheet" />
+}
+
+<h2 class="text-center bg-danger text-light">Thanh toán giỏ hàng</h2>
+
+<div class="row">
+    <div class="col-md-6">      
+            <table class="table table-bordered table-light">
+                <thead class="text-center">
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th class="table-dark">Giá tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td class="d-flex align-items-center">
+                                <div class="w-50"><img src="@item.Product.Images" class="img-fluid" style="height:100px" /></div>
+                                <div class="fw-bold w-50">@item.Product.ProductName</div>
+                            </td>
+                            <td>@item.Quantity</td>
+                            <td>@item.TotalPrice<span> VNĐ</span></td>
+                        </tr>
+                    }
+                    <tr>
+                        <td class="fw-bold">Tổng cộng:</td>
+                        @if (Session["TotalWithVoucher"] != null)
+                        {
+                            <td colspan="3">@Session["TotalWithVoucher"]<span> VNĐ</span></td>
+                        }
+                        else
+                        {
+                            <td colspan="3">@ViewBag.price<span> VNĐ</span></td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="col-md-6">
+        <h5 class="text-center">Thông tin khách hàng</h5>
+        <table class="table table-bordered">
+            <tr>
+                <td>Họ tên: </td>
+                <td>@cus.CustomerName</td>
+            </tr>
+            <tr>
+                <td>Địa chỉ: </td>
+                <td>@cus.Address</td>
+            </tr>
+            <tr>
+                <td>Điện thoại: </td>
+                <td>@cus.Phone</td>
+            </tr>
+            <tr>
+                <td>Ngày đặt: </td>
+                <td>@DateTime.Now.ToShortDateString()</td>
+            </tr>
+            <tr>
+                @using (Html.BeginForm("GetVoucher", "ShoppingCart"))
+                {
+                    <td>
+                        <input class="voucher" type="text" placeholder="Nhập mã khuyến mãi " name="mavoucher" />
+                    </td>
+                    <td class="text-center">
+                        <button type="submit" class="btn btn-success">Áp dụng</button>
+                    </td>
+                }
+            </tr>
+            <tr class="text-center">
+                <td colspan="2">
+                    @if (ViewBag.messageOn != null)
+                    {
+                        <p class="pt-2 fw-bold"> @ViewBag.messageOn</p>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">
+                    @Html.ActionLink("Thanh toán ngay", "SuccessOrder", "ShoppingCart", new { @class = "btn btn-primary" })
+                </td>
+                <td style="text-align: center;">
+                    @Html.ActionLink("Hoặc thanh toán bằng VNPAY", "Payment", "ShoppingCart", new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

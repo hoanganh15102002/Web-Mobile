@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Mobile_ecommerce.Models.ViewModel.Order.OrderInfo>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h4 class="header-title mb-0 text-center">Chi tiết đơn hàng</h4>
+<table class="table table-hover table-info mt-2 ">
+    <tr class="fw-bold">
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th class="bg-light">
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
+    }
+
+</table>
+<div class="form-group align-items-center row mt-3">
+    <div class="col-md-2">
+        @Html.ActionLink("Trở về", "Index", "Order", null, new { @class = "btn btn-light" })
+    </div>
+</div>

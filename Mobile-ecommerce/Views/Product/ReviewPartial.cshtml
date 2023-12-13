@@ -1,0 +1,34 @@
+﻿@model Mobile_ecommerce.Models.EF.ReviewPro
+
+<h2>Đánh giá sản phẩm</h2>
+
+<!-- Form nhập đánh giá sản phẩm -->
+
+@using (Html.BeginForm("AddReview", "Product", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ProductID)
+    <div class="form-group mb-2">
+        @Html.LabelFor(model => model.ReviewerName)
+        @Html.TextBoxFor(model => model.ReviewerName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mb-2">
+        @Html.LabelFor(model => model.ReviewContent)
+        @Html.TextAreaFor(model => model.ReviewContent, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mb-2">
+        @Html.LabelFor(model => model.RateValue)
+        @Html.DropDownListFor(model => model.RateValue, new List<SelectListItem>
+        {
+            new SelectListItem { Text = "1 sao", Value = "1" },
+            new SelectListItem { Text = "2 sao", Value = "2" },
+            new SelectListItem { Text = "3 sao", Value = "3" },
+            new SelectListItem { Text = "4 sao", Value = "4" },
+            new SelectListItem { Text = "5 sao", Value = "5" }
+        }, "Chọn số sao", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Đăng đánh giá</button>
+}
